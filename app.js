@@ -31,7 +31,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 
@@ -148,9 +148,9 @@ passport.use(
     }
   )
 );
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+app.get("/",function(req,res){
+  res.send("hello")
+})
 app.get("/fetchdata", async (req, res) => {
   try {
     const foundBasicAndWork = await BasicAndWork.findOne({ userId: userId });
