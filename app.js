@@ -25,7 +25,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://legendary-tulumba-5f4213.netlify.app"],
+    origin: ["http://localhost:3000","https://ownresumebuilder.netlify.app"],
     credentials: true,
   })
 );
@@ -133,7 +133,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:8000/auth/google/resume",
+      callbackURL: "https://backend-resume-ugnu.onrender.com/auth/google/resume",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
     function (accessToken, refreshToken, profile, cb) {
@@ -181,16 +181,6 @@ app.get(
 
 app.post("/api/save-data", async (req, res) => {
   const formData = req.body;
-  console.log("--------------------------------------------------------------");
-  for (let key in formData) {
-    console.log(key, formData[key]);
-  }
-  console.log("--------------------------------------------------------------");
-  console.log("detail   " + JSON.stringify(formData["Basic Info"]));
-  console.log(
-    "detail------   " + JSON.stringify(formData["Basic Info"]["detail"])
-  );
-
   const basicInfo = formData["Basic Info"];
   const workExp = formData["Work Experience"];
   const project = formData["Project"];
@@ -200,10 +190,7 @@ app.post("/api/save-data", async (req, res) => {
   const other = formData["Others"];
 
   console.log("in savedata babsicInfoDetail=" + JSON.stringify(basicInfo));
-
-  console.log("api/save-data" + userId);
   const filter = { userId: userId };
-  // const update = {fName:firstName,lName:lastName};
   let update = {
     basicInfoDetail: basicInfo,
     workExpDetails: workExp,
@@ -272,7 +259,7 @@ app.post("/login", async (req, res) => {
     console.log("error in login" + err);
   }
 });
-// const port = process.env.PORT || 8080;
-app.listen(8000, function (req, res) {
+const port = process.env.PORT || 8000;
+app.listen(port, function (req, res) {
   console.log("listening");
 });
