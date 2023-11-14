@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const passportLocalMogoose = require("passport-local-mongoose");
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 const cors = require("cors");
 const findOrCreate = require("mongoose-findorcreate");
@@ -14,6 +13,7 @@ let userId = "";
 const connectDB=require("./config/db")
 const app = express();
 app.use(express.json());
+const path = require('path');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
@@ -31,6 +31,8 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 
@@ -146,9 +148,9 @@ passport.use(
     }
   )
 );
-app.get("/",function(req,res){
-  res.send("hello hi")
-})
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 app.get("/fetchdata", async (req, res) => {
   try {
     const foundBasicAndWork = await BasicAndWork.findOne({ userId: userId });
@@ -168,8 +170,7 @@ app.get("/auth/google",
 
 //google will send the user to auth/google/resume route after authenticating the user by google strategy.
 
-app.get(
-  "/auth/google/resume", //this will locally authenticate the user
+app.get("/auth/google/resume", //this will locally authenticate the user
   passport.authenticate("google", { failureRedirect: "/" }),
   function (req, res) {
     // Successful authentication, redirect home.
