@@ -272,7 +272,7 @@ app.post("/login", async (req, res) => {
     console.log("error in login" + err);
   }
 });
-const port = process.env.PORT || 8080;
-app.listen(port, function (req, res) {
+// const port = process.env.PORT || 8080;
+app.listen(8000, function (req, res) {
   console.log("listening");
 });
