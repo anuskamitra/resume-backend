@@ -140,7 +140,6 @@ passport.use(
       User.findOrCreate({ userId: profile.id }, async (err, user) => {
         if (user) {
           userId = profile.id;
-          console.log(user + "   " + userId);
         }
         return cb(err, user);
       });
@@ -148,7 +147,7 @@ passport.use(
   )
 );
 app.get("/",function(req,res){
-  res.send("hello")
+  res.send("hello hi")
 })
 app.get("/fetchdata", async (req, res) => {
   try {
@@ -173,9 +172,8 @@ app.get(
   "/auth/google/resume", //this will locally authenticate the user
   passport.authenticate("google", { failureRedirect: "/" }),
   function (req, res) {
-    // console.log("in auth/google/resume");
     // Successful authentication, redirect home.
-    res.redirect("http://localhost:3000/resume");
+    res.redirect("https://ownresumebuilder.netlify.app/resume");
   }
 );
 
