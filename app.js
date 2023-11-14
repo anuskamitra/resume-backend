@@ -25,7 +25,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000","https://legendary-tulumba-5f4213.netlify.app"],
     credentials: true,
   })
 );
