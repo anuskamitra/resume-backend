@@ -163,12 +163,19 @@ app.get("/fetchdata", async (req, res) => {
   }
 });
 app.get('/api/check-auth',ensureAuthenticated,(req, res) => {
+  console.log('Request Headers:', req.headers);
+  console.log('Session:', req.session);
+  console.log('User:', req.user);
   console.log("inAPI")
   res.json({ user: req.user }); 
   
 });
 function ensureAuthenticated(req, res, next) {
   console.log("----------------------------line 176"+circularJson.stringify(req, null, 2))
+  console.log("------------------------------------------------------------") 
+  console.log('Request Headers:', req.headers);
+  console.log('Session:', req.session);
+  console.log('User:', req.user);
   if (req.isAuthenticated()) { 
     console.log("----------------------------------in 172     Authenticated") 
     return next();
