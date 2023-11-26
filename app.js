@@ -169,7 +169,8 @@ app.get('/api/check-auth',ensureAuthenticated,(req, res) => {
 });
 function ensureAuthenticated(req, res, next) {
   console.log("----------------------------line 176"+circularJson.stringify(req, null, 2))
-  if (req.isAuthenticated()) {  
+  if (req.isAuthenticated()) { 
+    console.log("----------------------------------in 172     Authenticated") 
     return next();
   }
   res.json({  user: null }); // Respond with an unauthorized status
@@ -198,7 +199,7 @@ app.post("/api/save-data", async (req, res) => {
   const summary = formData["summary"];
   const other = formData["Others"];
 
-  console.log("in savedata basicInfoDetail=" + JSON.stringify(basicInfo));
+  // console.log("in savedata basicInfoDetail=" + JSON.stringify(basicInfo));
   const filter = { userId: userId };
   let update = {
     basicInfoDetail: basicInfo,
@@ -244,7 +245,7 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   userId=req.body.email
-  console.log(userId)
+  console.log("in login----------"+userId)
   const user = {
     userId: req.body.email,
     email: req.body.email,
