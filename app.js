@@ -20,6 +20,10 @@ app.use(
     secret: "Thisisalittlesecret",
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      sameSite: 'None',
+      secure: process.env.NODE_ENV === 'production', // Set to true in production
+    },
   })
 );
 app.use(
