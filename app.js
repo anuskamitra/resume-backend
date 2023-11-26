@@ -124,7 +124,10 @@ passport.serializeUser((user, cb) => {
 });
 passport.deserializeUser((user, cb) => {
   process.nextTick(function () {
-    return cb(null, user);
+    return cb(null, {
+      id: user.id,
+      username: user.username,
+    });
   });
 });
 
