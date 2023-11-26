@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const circularJson = require('circular-json');
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
@@ -13,9 +14,7 @@ let userId = "";
 const connectDB=require("./config/db")
 const app = express();
 app.use(express.json());
-const path = require('path');
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(
   session({
     secret: "Thisisalittlesecret",
@@ -31,11 +30,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-
-
 connectDB();
 
 const UserSchema = new mongoose.Schema({
@@ -164,6 +158,18 @@ app.get("/fetchdata", async (req, res) => {
     res.status(500).send("Internal error");
   }
 });
+app.get('/api/check-auth',ensureAuthenticated,(req, res) => {
+  console.log("inAPI")
+  res.json({ user: req.user }); 
+  
+});
+function ensureAuthenticated(req, res, next) {
+  console.log("----------------------------line 176"+circularJson.stringify(req, null, 2))
+  if (req.isAuthenticated()) {  
+    return next();
+  }
+  res.json({  user: null }); // Respond with an unauthorized status
+}
 app.get("/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 ); //tell passport to authenticate the profile by using google strategy wich we have set up above
@@ -188,7 +194,7 @@ app.post("/api/save-data", async (req, res) => {
   const summary = formData["summary"];
   const other = formData["Others"];
 
-  console.log("in savedata babsicInfoDetail=" + JSON.stringify(basicInfo));
+  console.log("in savedata basicInfoDetail=" + JSON.stringify(basicInfo));
   const filter = { userId: userId };
   let update = {
     basicInfoDetail: basicInfo,
