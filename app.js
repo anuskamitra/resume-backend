@@ -29,7 +29,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://ownresumebuilder.netlify.app"],
+    origin: ["http://localhost:3000","https://ownresumebuilder.netlify.app","https://resume-q1d8.onrender.com"],
     credentials: true,
   })
 );
@@ -196,7 +196,7 @@ app.get("/auth/google/resume", //this will locally authenticate the user
   passport.authenticate("google", { failureRedirect: "/" }),
   function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect("https://ownresumebuilder.netlify.app/resume");
+    res.redirect("https://resume-q1d8.onrender.com/resume");
   }
 );
 
